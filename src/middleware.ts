@@ -9,10 +9,6 @@ export async function middleware(request: NextRequest) {
     const session = await auth();
     const isAuthenticated = !!session?.user;
 
-    console.log(JSON.stringify(request));
-
-    console.log(isAuthenticated, session?.user?.name, nextUrl.pathname);
-
     const isPublicRoute = (PUBLIC_ROUTES.find(route => nextUrl.pathname.startsWith(route)) || nextUrl.pathname == "ROOT");
 
     if(!isPublicRoute && !isAuthenticated)
