@@ -32,6 +32,12 @@ export default async function Login(){
                                         <Button label="Sign in" size="large"/>
                                     </Link>
                                 </div>
+                                <div className="pt-5 text-base font-semibold text-gray-600 leading-7 flex justify-right">
+                                    <p>Not having an account?
+                                    <Link href="/signup" className="text-decoration-line: underline">
+                                        Register here.
+                                    </Link></p>
+                                </div>
                             </div>
                         </div>
                     </div>

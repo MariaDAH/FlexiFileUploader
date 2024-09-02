@@ -10,8 +10,10 @@ export const metadata: Metadata = {
     description: "Authentication portal.",
 };
 
-export default async function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
-
+export default async function RootLayout(
+    {children}: Readonly<{
+        children: React.ReactNode;
+    }>) {
     return (
         <html lang="en">
             <body className={`${inter.className} layout`}>
