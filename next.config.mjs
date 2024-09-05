@@ -1,16 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    experimental: {
+        outputFileTracingIncludes: {
+            "/uploader": ["./public/**/*"],
+        },
+    },
     images: {
         remotePatterns: [
             {
                 protocol: 'https',
                 hostname: 'lh3.googleusercontent.com',
-                port: '',
-                pathname: '/a/**',
-            },
-            {
-                protocol: 'http',
-                hostname: 'flexi-file-uploader.vercel.app',
                 port: '',
                 pathname: '/a/**',
             },
@@ -25,11 +24,6 @@ const nextConfig = {
             }
         }
         return config;
-    },
-    experimental: {
-        outputFileTracingIncludes: {
-            "/uploads": ["./public/**/*"],
-        },
     },
 }
 
