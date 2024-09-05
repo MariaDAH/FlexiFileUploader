@@ -8,6 +8,7 @@ export default async function Home() {
     const session = await auth();
 
     const path_ = path.join(process.cwd(), './public/uploads');
+    console.log('Reading file from', path_);
     const files = await fs.readdir(path_);
 
     const images = files
@@ -18,7 +19,7 @@ export default async function Home() {
         return {"image": x}
     })
 
-    console.log('Dataaaaaaaaaaaaa', data);
+    console.log('Data', data);
 
     const documents = files.filter((file:any) => file.endsWith("pdf") || file.endsWith(".docx"));
 
