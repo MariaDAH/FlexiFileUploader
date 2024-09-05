@@ -26,6 +26,11 @@ const nextConfig = {
         }
         return config;
     },
+    experimental: {
+        outputFileTracingIncludes: {
+            "/uploads": ["./public/**/*"],
+        },
+    },
 }
 
 export default nextConfig;
