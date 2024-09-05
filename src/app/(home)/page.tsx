@@ -12,7 +12,7 @@ export default async function App() {
                 session?.user ? (
                     redirect('/home')
                 ) : (
-                    redirect('/singin')
+                    redirect('/signin')
                 )
             }
         </>

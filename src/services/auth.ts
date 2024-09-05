@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google";
 
-const baseUrl = process.env.API_BASE_URL;
+const BASE_URL = process.env.API_BASE_URL;
 
 export const {
     handlers: { GET, POST },
@@ -22,7 +22,7 @@ export const {
                 if (!credentials.username || !credentials.password) return null;
 
                 const { username, password } = credentials;
-                const res = await fetch(`${baseUrl}/api/public/v1/login`, {
+                const res = await fetch(`${BASE_URL}/api/public/v1/signin`, {
                     method: 'POST',
                     body: JSON.stringify(credentials),
                     headers: { "Content-Type": "application/json" }
@@ -44,8 +44,7 @@ export const {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            //ToDo: Review this configuration
-            authorization: {
+            authorization: { //force re-issue refresh token on signin
                 params: {
                     prompt: "consent",
                     access_type: "offline",
@@ -57,13 +56,11 @@ export const {
     session: {
         strategy: 'jwt',
         maxAge: 1 * 24 * 60 * 60, // 1 day
-    },
-    jwt: {
-        // JWT encoding and decoding configurations
+        updateAge: 12 * 60 * 60,
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
-            return baseUrl
+            return baseUrl;
         },
     },
 });

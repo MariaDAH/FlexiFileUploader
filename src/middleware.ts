@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from '@/services/auth'
-import { PUBLIC_ROUTES } from '@/lib/routes';
+import { PUBLIC_ROUTES, SIGNUP } from '@/lib/routes';
 
 export async function middleware(request: NextRequest) {
 
@@ -10,6 +10,7 @@ export async function middleware(request: NextRequest) {
     const isAuthenticated = !!session?.user;
 
     const isPublicRoute = (PUBLIC_ROUTES.find(route => nextUrl.pathname.startsWith(route)) || nextUrl.pathname == "ROOT");
+    const isSIGNUP = (nextUrl.pathname === SIGNUP) ? true : false;
 
     if(!isPublicRoute && !isAuthenticated)
         return NextResponse.redirect(new URL('/', nextUrl));

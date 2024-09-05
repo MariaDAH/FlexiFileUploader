@@ -3,6 +3,8 @@ import {NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
 
+    //throw new Error("testing error");
+
     console.log('Creating user...');
     const { username, password, image } = await req.json();
 
@@ -15,5 +17,5 @@ export async function POST(req: NextRequest) {
 
     console.log(user);
     //ToDo: Go to database and insert recordif user doesnt exists
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.json(user, { status: 201 });
 }

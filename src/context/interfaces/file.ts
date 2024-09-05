@@ -4,4 +4,5 @@ export interface File {
     type: MimeTypes;
     extension: string;
     content: ArrayBuffer;
+    lastModified: Date;
 }

@@ -37,7 +37,7 @@ export default async function Logout() {
                                                         await signOut();
                                                     }}
                                                 >
-                                                    <Button size="large" label="Sign out" type="submit"/>
+                                                    <Button size="large" label="Sign out" type="submit" primary/>
                                                 </form>
                                             </div>
                                         </div>
