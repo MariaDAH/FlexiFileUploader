@@ -93,7 +93,7 @@ export default function Uploader() {
                                             action={async () => {
                                                 const formData = new FormData();
                                                 formData.set('file', data);
-                                                console.log('Form data ****************', data);
+                                                //console.log('Form data ****************', data);
                                                 await uploadFiles(formData);
                                             }}
                                         >

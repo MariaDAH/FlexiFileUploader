@@ -7,12 +7,12 @@ export default async function Home() {
     const fs = fsWithCallbacks.promises; //Does not wotk
     const session = await auth();
 
-    const path_ = path.join(process.cwd(), './public/uploads');
+    const path_ = path.join(process.cwd(), 'public/uploads');
     console.log('Reading file from', path_);
     const files = await fs.readdir(path_);
 
     const images = files
-        .filter((file:any) => file.endsWith(".JPG"))
+        .filter((file:any) => file.endsWith(".JPG") || file.endsWith(".jpg"))
         .map((file:any) => `/uploads/${file}`)
 
     const data = images.map((x) => {
