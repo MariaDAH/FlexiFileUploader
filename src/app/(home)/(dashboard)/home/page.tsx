@@ -1,12 +1,14 @@
 import {default as fsWithCallbacks} from 'fs'
 import { auth } from "@/services/auth";
 import Carousel from './Carousel';
+import path from 'path';
 
 export default async function Home() {
     const fs = fsWithCallbacks.promises; //Does not wotk
     const session = await auth();
 
-    const files = await fs.readdir("./public/uploads");
+    const path_ = path.join(process.cwd(), './public/uploads');
+    const files = await fs.readdir(path_);
 
     const images = files
         .filter((file:any) => file.endsWith(".JPG"))
