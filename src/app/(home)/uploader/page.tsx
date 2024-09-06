@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button/button";
-import { uploadFiles } from "@/context/data/actions";
+import {uploadBlob, uploadFiles } from "@/context/data/actions";
 import { useState } from "react";
 
 
@@ -94,10 +94,10 @@ export default function Uploader() {
                                                 const formData = new FormData();
                                                 formData.set('file', data);
                                                 //console.log('Form data ****************', data);
-                                                await uploadFiles(formData);
+                                                await uploadBlob(formData);
                                             }}
                                         >
-                                            <Button size="large" label="Save" type="submit" primary/>
+                                            <Button size="large" label="Upload" type="submit" primary/>
                                         </form>
                                     </div>
                                 </div>

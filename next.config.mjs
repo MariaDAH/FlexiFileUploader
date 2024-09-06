@@ -13,7 +13,11 @@ const nextConfig = {
                 port: '',
                 pathname: '/a/**',
             },
-        ]
+            {
+                protocol: 'https',
+                hostname: 'vrmmf5vbjcaqhcui.public.blob.vercel-storage.com',
+            }
+        ],
     },
     reactStrictMode: true,
     swcMinify: true,

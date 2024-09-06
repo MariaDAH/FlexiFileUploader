@@ -2,10 +2,17 @@ import {default as fsWithCallbacks} from 'fs'
 import { auth } from "@/services/auth";
 import Carousel from './Carousel';
 import path from 'path';
+import { list } from '@vercel/blob';
 
 export default async function Home() {
     const fs = fsWithCallbacks.promises; //Does not wotk
     const session = await auth();
+
+    const blobs = await list();
+
+    const blobImages = blobs.blobs
+        .filter((file) => file.pathname.endsWith(".JPG") || file.pathname.endsWith(".jpg"))
+        .map((file) => file.url)
 
     const path_ = path.join(process.cwd(), 'public/uploads');
     console.log('Reading file from', path_);
@@ -13,15 +20,24 @@ export default async function Home() {
 
     const images = files
         .filter((file:any) => file.endsWith(".JPG") || file.endsWith(".jpg"))
-        .map((file:any) => `/uploads/${file}`)
+        .map((file:any) => `/uploads/${file}`);
 
-    const data = images.map((x) => {
+    const resultMerge = images.concat(blobImages);
+
+    const data = resultMerge.map((x) => {
         return {"image": x}
     })
 
-    console.log('Data', data);
+    console.log('Data images', data);
 
-    const documents = files.filter((file:any) => file.endsWith("pdf") || file.endsWith(".docx"));
+    const documents = files
+        .filter((file) => file.endsWith("pdf") || file.endsWith(".docx"));
+
+    const blobFiles = blobs.blobs
+        .filter((file) => file.pathname.endsWith(".pdf") || file.pathname.endsWith(".docx"))
+        .map((file) => file.pathname);
+
+    const docsMerge = documents.concat(blobFiles);
 
     return (
          <>
@@ -40,8 +56,8 @@ export default async function Home() {
                              <div className="flex flex-1 flex-row bg-blue-300 overflow-hidden rounded-lg">
                                  <div className="flex-1 overflow-y-scroll bg-blue-50 text-black rounded-lg">
                                      {
-                                         documents ? (
-                                             documents.map((document, i) => {
+                                         docsMerge ? (
+                                             docsMerge.map((document, i) => {
                                                  return (
                                                      <div className="w-full" key={i}>
                                                          <p>{document}</p>
