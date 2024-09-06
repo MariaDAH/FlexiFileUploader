@@ -1,14 +1,16 @@
 "use client"
 
 import { Button } from "@/components/ui/button/button";
-import {uploadBlob, uploadFiles } from "@/context/data/actions";
+import {uploadBlob, uploadLocal } from "@/context/data/actions";
 import { useState } from "react";
+import { Modal } from "./modal";
 
 
 export default function Uploader() {
     const [file, setFile] = useState<string>();
     const [data, setData] = useState<any>();
     const [fileEnter, setFileEnter] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <>
@@ -40,11 +42,8 @@ export default function Uploader() {
                                                     let blobUrl = URL.createObjectURL(file);
                                                     setData(file);
                                                     setFile(blobUrl);
+                                                    //console.log('Data type single', data.type);
                                                 }
-                                                /*console.log('File data**********', file);
-                                                console.log('Blob url**********', URL.createObjectURL(file));
-                                                console.log(`items file[${i}]`, JSON.stringify(file));
-                                                console.log(`items file[${i}].name = ${file?.name}`);*/
                                             }
                                         });
                                     } else {
@@ -73,17 +72,28 @@ export default function Uploader() {
                                         if (files && files[0]) {
                                             let blobUrl = URL.createObjectURL(files[0]);
                                             setFile(blobUrl);
+                                            setData(files[0]);
+                                            //console.log('Data type', data.type);
                                         }
                                     }}
                                 />
                             </div>
                         ) : (
                             <div className="flex flex-col items-center">
-                                <object
-                                    className="rounded-md w-full max-w-lg h-72"
-                                    data={file}
-                                    type="image/png" //need to be updated based on type of file
-                                />
+                                {
+                                    data.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ?
+                                        (
+                                             <object className="rounded-md w-full max-w-lg h-72"
+                                                     data={file}
+                                                    type={data.type}/>
+
+                                        ): (
+                                            <iframe className="flex flex-col items-center bg-transparent"
+                                                    src={data.url}
+                                                    title={data.title}
+                                            />
+                                        )
+                                }
                                 <div className="flex flex-row items-center mt-10">
                                     <div className="p-2">
                                         <Button size="large" label="Reset" type="reset" primary onClick={() => setFile("")} />
@@ -93,8 +103,8 @@ export default function Uploader() {
                                             action={async () => {
                                                 const formData = new FormData();
                                                 formData.set('file', data);
-                                                //console.log('Form data ****************', data);
                                                 await uploadBlob(formData);
+                                                setShowModal(!showModal);
                                             }}
                                         >
                                             <Button size="large" label="Upload" type="submit" primary/>
@@ -104,6 +114,9 @@ export default function Uploader() {
                             </div>
                         )}
                     </div>
+                    {
+                        showModal && <Modal action={setShowModal} nameFile={data.pathname} />
+                    }
                 </main>
             </div>
         </>

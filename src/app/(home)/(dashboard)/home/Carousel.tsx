@@ -3,12 +3,12 @@ import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 
 const Carousel = ({data}: { data: { image: string }[] }) => {
-    // State and Ref initialization
+
     const [currentImg, setCurrentImg] = useState(0)
     const [carouselSize, setCarouselSize] = useState({ width: 0, height: 0 })
     const carouselRef = useRef(null)
 
-    // useEffect to get the initial carousel size
+
     useEffect(() => {
         let elem = carouselRef.current as unknown as HTMLDivElement
         let { width, height } = elem.getBoundingClientRect()
