@@ -34,20 +34,20 @@ const Carousel = ({data}: { data: { image: string }[] }) => {
                         <div className="flex items-center justify-center">
                             <p>No images uploaded</p>
                         </div>
-                        ) : (
-                            <>
-                                {data.map((v, i) => (
-                                    <div key={i} className="relative h-full w-full shrink-0 flex justify-center">
-                                        <Image
-                                            className="pointer-events-none"
-                                            alt={`carousel-image-${i}`}
-                                            fill
-                                            src={v.image || 'https://random.imagecdn.app/500/500'}
-                                        />
-                                    </div>
-                                ))}
-                            </>
-                        )}
+                    ) : (
+                        <>
+                            {data.map((v, i) => (
+                                <div key={i} className="relative h-full w-full shrink-0 flex justify-center">
+                                    <Image
+                                        className="pointer-events-none"
+                                        alt={`carousel-image-${i}`}
+                                        fill
+                                        src={v.image || 'https://random.imagecdn.app/500/500'}
+                                    />
+                                </div>
+                            ))}
+                        </>
+                    )}
                     </>
                 </div>
             </div>

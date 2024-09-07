@@ -1,8 +1,7 @@
 export interface File {
     name: string;
     size: number;
-    type: MimeTypes;
-    extension: string;
-    content: ArrayBuffer;
+    type: string;
+    extension?: string;
     lastModified: Date;
 }

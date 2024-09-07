@@ -1,5 +1,6 @@
 export interface UploadedFile {
-    path: string;
+    uploadUrl: string;
     connector: Connectors;
     status: UploadStatus;
+    downloadUrl: string;
 }

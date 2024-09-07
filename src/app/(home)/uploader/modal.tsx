@@ -14,8 +14,8 @@ export function Modal(props: Props) {
             <div className="p-8 border w-96 shadow-lg rounded-md bg-white">
                 <div className="text-center">
                     {/*<h3 className="text-2xl font-bold text-gray-900">File uploaded</h3>*/}
-                    <div className="mt-2 px-7 py-3">
-                        <p className="text-lg text-gray-500">File {props.nameFile} uploaded.</p>
+                    <div className="mt-2 px-7 py-3 flex items-center justify-center">
+                        <p className="text-lg text-gray-500 text-ellipsis overflow-hidden">File {props.nameFile} uploaded.</p>
                     </div>
                     <div className="flex justify-center mt-4">
                         <Link
