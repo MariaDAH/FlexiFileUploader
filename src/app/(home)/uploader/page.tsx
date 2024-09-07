@@ -90,7 +90,7 @@ export default function Uploader() {
                                         ): (
                                             <iframe className="flex flex-col items-center bg-transparent"
                                                     src={data.url}
-                                                    title={data.title}
+                                                    title={data.name}
                                             />
                                         )
                                 }
@@ -115,7 +115,7 @@ export default function Uploader() {
                         )}
                     </div>
                     {
-                        showModal && <Modal action={setShowModal} nameFile={data.pathname} />
+                        showModal && <Modal action={setShowModal} nameFile={data?.name} />
                     }
                 </main>
             </div>
