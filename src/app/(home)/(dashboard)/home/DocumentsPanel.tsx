@@ -20,12 +20,6 @@ export default function DocumentsPanel( {data}: { data: File[] } ) {
 
     return (
         <>
-            <div>
-                <h3>Blob Data:</h3>
-                <pre>{
-                    JSON.stringify(data, null, 2)
-                }</pre>
-            </div>
             <section className="flex items-center">
                 {
                      loading ? (
