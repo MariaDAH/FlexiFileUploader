@@ -18,7 +18,7 @@ const Carousel = ({data}: { data: { image: string }[] }) => {
                 height,
             })
         }
-    }, [])
+    }, [currentImg])
 
     return (
         <div className="shrink-0 h-full w-full">
@@ -42,7 +42,8 @@ const Carousel = ({data}: { data: { image: string }[] }) => {
                                         className="pointer-events-none"
                                         alt={`carousel-image-${i}`}
                                         fill
-                                        src={v.image || 'https://random.imagecdn.app/500/500'}
+                                        src={v.image}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                 </div>
                             ))}
@@ -51,8 +52,7 @@ const Carousel = ({data}: { data: { image: string }[] }) => {
                     </>
                 </div>
             </div>
-            {/* Navigation buttons */}
-            <div className="mt-3 flex justify-center">
+             <div className="mt-3 flex justify-center">
                 <button
                     disabled={currentImg === 0}
                     onClick={() => {
