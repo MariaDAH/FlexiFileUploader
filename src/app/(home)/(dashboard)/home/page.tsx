@@ -24,8 +24,8 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await GetBlobsByConnector(strategy);
-                const files = data ?? {
+                const data_ = await GetBlobsByConnector(strategy);
+                const files = data_ ?? {
                     data: {
                         images: [],
                         documents: [],
@@ -39,11 +39,6 @@ export default function Home() {
             }
         }
         fetchData();
-        console.log('I got data', data);
-
-        return () => {
-            console.log('Cleanup if needed');
-        };
     }, [strategy, error]);
 
     return (
