@@ -48,12 +48,6 @@ export default function Home() {
 
     return (
         <>
-            <div>
-                <h3>Blob Data:</h3>
-                <pre>{
-                    JSON.stringify(data.data.images.length, null, 2)
-                }</pre>
-            </div>
             <main className="dark:bg-black dark:text-white">
                 <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
                     <h1 className="text-6xl">{session?.data?.user?.name} uploads</h1>
