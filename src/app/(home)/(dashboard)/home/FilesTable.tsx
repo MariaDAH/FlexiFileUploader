@@ -1,7 +1,6 @@
 import {Table, TableRow, TableColumn, TableHeader, TableBody, TableCell, getKeyValue } from "@nextui-org/table";
 import { File } from '@/context/interfaces/file'
 
-
 interface tableProps {
     rows: File[];
 }

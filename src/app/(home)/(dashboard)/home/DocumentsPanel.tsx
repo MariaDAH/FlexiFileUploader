@@ -1,38 +1,47 @@
 "use client"
-import useBlobDetails from "@/hooks/useBlobDetails";
-import { Suspense } from "react";
 import FilesTable from "./FilesTable";
+import Loader from "@/components/ui/loader/loader";
+import {useEffect, useState } from "react";
+import {File} from "@/context/interfaces/file"
 
-export default function DocumentsPanel() {
-    const {  data, error, loading } = useBlobDetails();
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+export default function DocumentsPanel( {data}: { data: File[] } ) {
+
+    const [documents, setDocuments] = useState<File[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null)
+
+    useEffect(() => {
+        if (data) {
+            setLoading(false);
+            setDocuments(data);
+        };
+
+        if (error) {
+            setError(error);
+        }
+    }, [data, error]);
 
     return (
-        <Suspense
-            fallback={
-                <div className="flex items-center justify-center h-screen">
-                    <div className="animate-spin rounded-full border-4 border-solid border-current border-r-transparent h-24 w-24"></div>
-                </div>
-            }
-        >
-            {loading ? (
-                <div className="flex items-center justify-center h-screen">
-                    <div className="animate-spin rounded-full border-4 border-solid border-current border-r-transparent h-24 w-24"></div>
-                </div>
-            ) : error ? (
-                <div>Error loading blobs: {error}</div>
-            ) : (
-                    data ? (
-                      <div className="h-screen flex justify-center">
-                          <FilesTable rows={data}></FilesTable>
-                      </div>
+        <>
+            <section className="flex items-center">
+                {
+                    loading ? (
+                        <div className="flex justify-center items-center">
+                            <Loader/>
+                        </div>
+                    ) : error ? (
+                        <div>Error loading blobs: {error?.message}</div>
                     ) : (
-                        <p>No data to fetch</p>
+                        documents ? (
+                            <div className="h-screen flex justify-center">
+                                <FilesTable rows={documents}></FilesTable>
+                            </div>
+                        ) : (
+                            <p>Alert: Info: No data fetch.</p>
+                        )
                     )
-                )
-            }
-        </Suspense>
+                }
+            </section>
+        </>
     );
-
 }

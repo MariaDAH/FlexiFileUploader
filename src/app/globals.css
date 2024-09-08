@@ -19,6 +19,19 @@
   }
 }
 
+/* Larger screens */
+@media (min-width: 768px) {
+  body {
+    min-width: 768px; /* Min width for tablets and larger devices */
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    min-width: 1024px; /* Min width for desktop screens */
+  }
+}
+
 body,
 body[data-theme="light"] {
   --color-text-primary: #27201a;
@@ -40,7 +53,12 @@ body {
   background: var(--color-bg-primary);
   color: var(--color-text-primary);
   font-family: sans-serif;
+  height: 100vh;
+  weight: 100vw;
+  margin: 0 auto;
+  padding: 0;
 }
+
 
 h1 {
   color: var(--color-text-secondary);
@@ -50,9 +68,13 @@ h1 {
 
 .layout {
   display: flex;
-  height: 100vh;
+  flex-direction: column;
   position: relative;
   gap: 2rem;
+  margin: 0 auto;
+  padding: 0;
+  overflow: auto;
+  min-height: 100vh;
 }
 
 .layout__main-content {

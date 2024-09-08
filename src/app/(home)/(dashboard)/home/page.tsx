@@ -1,74 +1,123 @@
-import {default as fsWithCallbacks} from 'fs'
-import { auth } from "@/services/auth";
+'use client';
 import Carousel from './Carousel';
-import path from 'path';
-import { list } from '@vercel/blob';
 import DocumentsPanel from './DocumentsPanel';
+import {GetBlobsByConnector} from '@/services/connector'
+import { useSession } from "next-auth/react";
+import {useEffect, useState } from "react";
+import { Dropdown } from "@/components/ui/dropdown/dropdown";
+import Loader from '@/components/ui/loader/loader';
+import {File} from '@/context/interfaces/file'
 
-export default async function Home() {
-    const fs = fsWithCallbacks.promises; //Does not wotk
-    const session = await auth();
+export default function Home() {
 
-    const blobs = await list();
+    const options = [
+        { key: 0 , value: "localhost" },
+        { key: 1 , value: "vercel" },
+    ]
 
-    const blobImages = blobs.blobs
-        .filter((file) => file.pathname.endsWith(".JPG") || file.pathname.endsWith(".jpg"))
-        .map((file) => file.url)
+    const session = useSession();
+    const [strategy, setStrategy] = useState<string>('localhost');
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<Error | undefined | null>(null);
+    const [data, setData] = useState<{data: { images: { image: string }[], documents: File[] } }>({data: { images: [], documents: []}});
 
-    const path_ = path.join(process.cwd(), 'public/uploads');
-    console.log('Reading file from', path_);
-    const files = await fs.readdir(path_);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await GetBlobsByConnector(strategy);
+                const files = data ?? {
+                    data: {
+                        images: [],
+                        documents: [],
+                    }
+                }
+                setLoading(false);
+                setData(files);
+            } catch (error: any) {
+                setError(error);
+                console.error(error);
+            }
+        }
+        fetchData();
+        console.log('I got data', data);
 
-    const images = files
-        .filter((file:any) => file.endsWith(".JPG") || file.endsWith(".jpg"))
-        .map((file:any) => `/uploads/${file}`);
-
-    const resultMerge = images.concat(blobImages);
-
-    const data = resultMerge.map((x) => {
-        return {"image": x}
-    })
-
-    //console.log('Data images', data);
-
-    const documents = files
-        .filter((file) => file.endsWith("pdf") || file.endsWith(".docx") || file.endsWith(".xlsx") || file.endsWith(".txt"));
-
-    const blobFiles = blobs.blobs
-        .filter((file) => file.pathname.endsWith(".pdf") || file.pathname.endsWith(".docx") || file.pathname.endsWith(".xlsx") || file.pathname.endsWith(".txt"))
-        .map((file) => file.pathname);
-
-    const docsMerge = documents.concat(blobFiles);
+        return () => {
+            console.log('Cleanup if needed');
+        };
+    }, [strategy, error]);
 
     return (
         <>
-            <div className="flex justify-left pt-24">
-                <main className="dark:bg-black dark:text-white">
-                    <h1 className="text-6xl">{session?.user?.name} uploads</h1>
-                    <div className="grid grid-cols-2 gap-4 max-h-screen">
-                        <div className="flex flex-col justify-left bg-blue-100 p-4 m-4 h-[50%]">
-                            <h1>Images</h1>
-                            <div className="flex flex-col justify-center items-center h-full w-full">
-                                <Carousel data={data}></Carousel>
-                            </div>
-                        </div>
-                        <div className="flex flex-col justify-left bg-blue-100 p-4 m-4 h-[50%]">
-                            <h1>Documents</h1>
-                            <div className="flex flex-1 flex-row bg-blue-300 overflow-hidden rounded-lg">
-                                <div className="flex-1 overflow-y-scroll bg-blue-50 text-black rounded-lg">
-                                    {
-                                        docsMerge ? (
-                                            <DocumentsPanel />
-                                        ) : (
-                                            <p>No documents</p>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                        </div>
+            <main className="dark:bg-black dark:text-white">
+                <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                    <h1 className="text-6xl">{session?.data?.user?.name} uploads</h1>
+                    <div className="mt-3">
+                        <Dropdown
+                            colorTheme="light"
+                            enabled
+                            id="label"
+                            name="Connectors:"
+                            onSelect={(e) => {
+                                setStrategy(e)
+                            }}
+                            options={options}
+                            size="large"
+                        />
                     </div>
-                </main>
-            </div>
+                    <section className="flex items-center">
+                        {
+                            loading ? (
+                                <div className="flex justify-center items-center">
+                                    <Loader/>
+                                </div>
+                            ) : error ? (
+                                <p> Alert: Error loading blobs: {error?.message} </p>
+                            ) : data ? (
+                                <>
+                                    <div className="flex flex-col">
+                                        <div className="h-96 bg-blue-100 m-4">
+                                            <div className="m-4">
+                                                <div className="flex flex-col flex-wrap gap-1 md:flex-grow">
+                                                    <div className="bg-purple-50 md:flex-grow w-full h-80">
+                                                        <h1>Images</h1>
+                                                        <Carousel data={data?.data.images}></Carousel>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="h-96 bg-blue-100 m-4">
+                                            <div className="m-4">
+                                                <div className="flex flex-col flex-wrap gap-1 md:flex-grow">
+                                                    <div
+                                                        className="bg-purple-50 md:flex-grow w-full h-80 overflow-hidden">
+                                                        <h1>Documents</h1>
+                                                        <div className="overflow-y-scroll">
+                                                            {
+                                                                data?.data?.documents ? (
+                                                                    <DocumentsPanel data={data?.data.documents} />
+                                                                ) : (
+                                                                    <p>Alert: Info: No data fetch.</p>
+                                                                )
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="flex justify-center items-center h-96 bg-blue-100">
+                                    <div className="bg-blue-100 p-10 text-white">
+                                        <p>Alert: Info: No data fetch.</p>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </section>
+
+                </div>
+            </main>
         </>
     );
 }

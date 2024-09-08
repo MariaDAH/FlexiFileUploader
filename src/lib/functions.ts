@@ -1,3 +1,7 @@
+import path from "path-browserify";
+import {default as fsWithCallbacks} from 'fs'
+import {File} from '@/context/interfaces/file'
+
 export const getUniqueValues = (array: any) => (
     array.reduce((accumulator:any, currentValue: any) => (
         accumulator.includes(currentValue) ? accumulator : [...accumulator, currentValue]
@@ -9,7 +13,6 @@ export const getCountsForEachElement = (array: any) => {
     array.forEach((x: any) => {
         counts[x] = (counts[x] || 0) + 1;
     });
-    //console.log("RESULT", counts);
     return counts;
 }
 
@@ -19,6 +22,24 @@ export const getArrayOfRandomColors = (n: number) => {
         const randomColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
         colors.push(randomColor);
     }
-    console.log('COLOR++++++++++++++++++',colors);
     return colors;
+}
+
+export const getStatsForDirectoryFile = (filePaths: string[], directoryPath: string) => {
+    const fs = fsWithCallbacks.promises;
+    const docs: File[] = [];
+    filePaths.map(async x => {
+        const filePath = path.join(directoryPath, x);
+        const stats = await fs.stat(filePath);
+        docs.push(
+            {
+                name: x,
+                size: stats.size,
+                type: '',
+                extension: filePath.split('.').pop() ?? '',
+                lastModified: stats.atime,
+            }
+        );
+    });
+    return docs;
 }
