@@ -20,8 +20,8 @@ export const PaginatedTable = ({ initialData, initialPage, total }: {initialData
             })
                 .then(res => res.json())
                 .then(result => {
-                    // Optionally store the pre-fetched data if needed
-                    console.log("PREFETCH", result);
+                    // Optionally store the pre-fetched data if needed, for example cache it
+                    /*console.log("PREFETCH", result);*/
                 });
         }
     }, [page, data]);
@@ -54,8 +54,10 @@ export const PaginatedTable = ({ initialData, initialPage, total }: {initialData
         <div>
             <h1>Paginated Data</h1>
             <FilesTable rows={data} ></FilesTable>
-            <button onClick={handlePrev} disabled={page === 1} className="m-3">Previous</button>
-            <button onClick={handleNext} disabled={page * PAGE_SIZE >= total}>Next</button>
+            <div className="flex justify-center">
+                <button onClick={handlePrev} disabled={page === 1} className="m-3">Previous</button>
+                <button onClick={handleNext} disabled={page * PAGE_SIZE >= total}>Next</button>
+            </div>
         </div>
     );
 };

@@ -54,7 +54,7 @@ body {
   color: var(--color-text-primary);
   font-family: sans-serif;
   height: 100vh;
-  weight: 100vw;
+  width: 100vw;
   margin: 0 auto;
   padding: 0;
 }
