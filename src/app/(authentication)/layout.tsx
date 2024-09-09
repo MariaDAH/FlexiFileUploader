@@ -1,9 +1,5 @@
 import React from "react";
-import { Inter } from "next/font/google";
 import { Metadata } from "next";
-import "../globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Auth Portal",
@@ -15,11 +11,5 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} layout`}>
-        <div className="w-full h-screen flex flex-col">{children}</div>
-      </body>
-    </html>
-  );
+  return <div className="flex flex-col">{children}</div>;
 }
