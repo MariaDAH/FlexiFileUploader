@@ -1,4 +1,4 @@
-import { File } from "@/context/interfaces/file";
+import { File } from "@/context/types";
 import {
   getArrayOfRandomColors,
   getCountsForEachElement,

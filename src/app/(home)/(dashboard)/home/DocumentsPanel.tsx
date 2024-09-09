@@ -2,7 +2,7 @@
 import FilesTable from "./FilesTable";
 import Loader from "@/components/ui/loader/loader";
 import { useEffect, useState } from "react";
-import { File } from "@/context/interfaces/file";
+import { File } from "@/context/types";
 
 export default function DocumentsPanel({ data }: { data: File[] }) {
   const [loading, setLoading] = useState(true);

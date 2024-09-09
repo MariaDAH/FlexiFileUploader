@@ -6,17 +6,25 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Dropdown } from "@/components/ui/dropdown/dropdown";
 import Loader from "@/components/ui/loader/loader";
-import { File } from "@/context/interfaces/file";
+import { File } from "@/context/types";
 import { PaginatedTable } from "./PaginatedTable";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import StorageContent from "@/app/(home)/(dashboard)/home/StorageContent";
+
+const options = [
+  { value: "localhost", label: "Local (filesystem)" },
+  { value: "vercel", label: "Remote (Vercel)" },
+];
 
 export default function Home() {
-  const options = [
-    { key: 0, value: "localhost" },
-    { key: 1, value: "vercel" },
-  ];
-
   const session = useSession();
-  const [strategy, setStrategy] = useState<string>("localhost");
+  const [strategy, setStrategy] = useState<string>(options[0].value);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | undefined | null>(null);
   const [data, setData] = useState<{
@@ -44,8 +52,23 @@ export default function Home() {
   }, [strategy, error]);
 
   return (
-    <main className="dark:bg-black dark:text-white">
-      <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+    <main>
+      <div>
+        <Select value={strategy} onValueChange={setStrategy}>
+          <SelectTrigger>
+            <SelectValue placeholder="Theme" />
+          </SelectTrigger>
+          <SelectContent>
+            {options.map(({ value, label }) => (
+              <SelectItem key={value} value={value}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <StorageContent strategy={strategy} />
+      {/*<div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
         <h1 className="text-6xl">{session?.data?.user?.name} uploads</h1>
         <div className="mt-3">
           <Dropdown
@@ -111,7 +134,7 @@ export default function Home() {
             </div>
           )}
         </section>
-      </div>
+      </div>*/}
     </main>
   );
 }

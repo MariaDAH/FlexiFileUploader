@@ -2,7 +2,7 @@
 import { list } from "@vercel/blob";
 import { default as fsWithCallbacks } from "fs";
 import path from "path-browserify";
-import { File } from "@/context/interfaces/file";
+import { File } from "@/context/types";
 import { getStatsForDirectoryFile } from "@/lib/functions";
 
 export const GetBlobsByConnector = async (connector: string) => {

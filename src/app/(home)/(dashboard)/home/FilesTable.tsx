@@ -7,7 +7,7 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/table";
-import { File } from "@/context/interfaces/file";
+import { File } from "@/context/types";
 
 interface tableProps {
   rows: File[] | number[] | any;

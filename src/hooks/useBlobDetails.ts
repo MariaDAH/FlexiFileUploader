@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { File } from "@/context/interfaces/file";
+import { File } from "@/context/types";
 
 const useBlobDetails = () => {
   const [data, setBlobs] = useState<File[] | null>(null);

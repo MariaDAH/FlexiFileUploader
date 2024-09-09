@@ -1,6 +1,6 @@
-import path from "path-browserify";
-import { default as fsWithCallbacks } from "fs";
-import { File } from "@/context/interfaces/file";
+import * as path from "path";
+import * as fs from "fs/promises";
+import { File } from "@/context/types";
 
 export const getUniqueValues = (array: any) =>
   array.reduce(
@@ -48,22 +48,32 @@ export const getMaxSizesByElement = (array: any) => {
   return groupedByCategory;
 };
 
-export const getStatsForDirectoryFile = (
+export async function getStatsForDirectoryFile(
   filePaths: string[],
   directoryPath: string,
-) => {
-  const fs = fsWithCallbacks.promises;
-  const docs: File[] = [];
-  filePaths.map(async (x) => {
-    const filePath = path.join(directoryPath, x);
-    const stats = await fs.stat(filePath);
-    docs.push({
-      name: x,
-      size: stats.size,
-      type: "",
-      extension: filePath.split(".").pop() ?? "",
-      lastModified: stats.atime,
-    });
-  });
-  return docs;
-};
+): Promise<File[]> {
+  return Promise.all(
+    filePaths.map(async (x): Promise<File> => {
+      const filePath = path.join(directoryPath, x);
+      const stats = await fs.stat(filePath);
+      return {
+        name: x,
+        size: stats.size,
+        type: "",
+        extension: path.extname(filePath),
+        lastModified: stats.atime,
+      };
+    }),
+  );
+}
+
+export async function getLocalFileMetadata(filePath: string): Promise<File> {
+  const stats = await fs.stat(filePath);
+  return {
+    name: path.basename(filePath),
+    size: stats.size,
+    type: "",
+    extension: path.extname(filePath),
+    lastModified: stats.atime,
+  };
+}
