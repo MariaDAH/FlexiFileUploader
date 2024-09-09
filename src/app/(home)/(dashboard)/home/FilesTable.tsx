@@ -2,7 +2,7 @@ import {Table, TableRow, TableColumn, TableHeader, TableBody, TableCell, getKeyV
 import { File } from '@/context/interfaces/file'
 
 interface tableProps {
-    rows: File[];
+    rows: File[] | number[] | any;
 }
 
 export default function FilesTable(props: tableProps) {

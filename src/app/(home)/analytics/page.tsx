@@ -1,9 +1,10 @@
 "use client";
-import {Line, Pie} from "react-chartjs-2";
-import {ArcElement, CategoryScale, Chart, Chart as ChartJS, LinearScale, LineElement, PointElement, Tooltip,} from "chart.js";
+import {Line, Pie, Bar} from "react-chartjs-2";
+import {ArcElement, CategoryScale, Chart, Chart as ChartJS, LinearScale, LineElement, PointElement, Tooltip, Title, Legend, BarElement} from "chart.js";
 import useBlobDetails from "@/hooks/useBlobDetails";
 import { GetPieChartConfiguration } from "./pie-chart-config";
 import { GetLineChartConfiguration } from "./line-chart-config";
+import { GetBarChartConfiguration } from "./bar-chart";
 import Loader from "@/components/ui/loader/loader";
 import {useEffect, useState } from "react";
 ChartJS.register(
@@ -12,7 +13,10 @@ ChartJS.register(
     PointElement,
     LineElement,
     Tooltip,
-    ArcElement
+    ArcElement,
+    Title,
+    Legend,
+    BarElement
 );
 
 export default function Analytics() {
@@ -23,6 +27,7 @@ export default function Analytics() {
 
     const dataPieChart = GetPieChartConfiguration({data: dataset}) ?? { data: [], option: {} };
     const dataLineChart = GetLineChartConfiguration({data: dataset}) ?? { data: [], option: {} };
+    const dataBarChart = GetBarChartConfiguration({data: dataset}) ?? { data: [], option: {} };
 
     return (
         <>
@@ -43,8 +48,8 @@ export default function Analytics() {
                                     <div className="flex-1 p-4 bg-purple-50">
                                         <Pie data={dataPieChart.data} options={dataPieChart.options}/>
                                     </div>
-                                    <div className="flex-1 p-4 bg-purple-50">
-                                        <Pie data={dataPieChart.data} options={dataPieChart.options}/>
+                                    <div className="flex-1 p-4 bg-purple-50 flex justify-center items-center">
+                                        <Bar data={dataBarChart.data} options={dataBarChart.options}/>
                                     </div>
                                 </div>
                                 <div className="h-96 bg-blue-100 m-4">

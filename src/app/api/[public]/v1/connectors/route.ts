@@ -1,6 +1,7 @@
 import { auth } from "@/services/auth";
 import {NextRequest, NextResponse } from "next/server"
 
+//ToDo: Return available connectors (vercel and localhost)
 export const GET = async (request: NextRequest) => {
 
     const session = await auth();

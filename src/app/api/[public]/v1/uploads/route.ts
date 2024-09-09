@@ -1,6 +1,7 @@
 import { auth } from "@/services/auth";
 import {NextRequest, NextResponse } from "next/server"
 import { list } from '@vercel/blob';
+import { } from  '@/context/interfaces/file'
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
     const session = await auth();

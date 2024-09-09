@@ -7,6 +7,7 @@ import {useEffect, useState } from "react";
 import { Dropdown } from "@/components/ui/dropdown/dropdown";
 import Loader from '@/components/ui/loader/loader';
 import {File} from '@/context/interfaces/file'
+import { PaginatedTable } from './PaginatedTable';
 
 export default function Home() {
 
@@ -100,6 +101,7 @@ export default function Home() {
                                             </div>
                                         </div>
                                     </div>
+                                    <PaginatedTable initialData={data.data.documents} initialPage={0} total={data.data.documents.length} />
                                 </>
                             ) : (
                                 <div className="flex justify-center items-center h-96 bg-blue-100">
