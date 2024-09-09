@@ -84,7 +84,7 @@ async function listRemoteFiles(): Promise<StorageContent> {
       extension: blob.pathname.split(".").at(-1) ?? "",
       type: "",
       size: blob.size,
-      lastModified: blob.uploadedAt,
+      uploadedAt: blob.uploadedAt,
     });
   }
 
