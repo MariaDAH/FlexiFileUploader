@@ -1,14 +1,8 @@
 import type { ListFilesResult } from "@/context/types";
 import { listFiles as listVercelFiles } from "@/lib/vercel-blob";
 import { listFiles as listLocalFiles } from "@/lib/local-fs";
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import PageHeader from "@/components/page-header";
-import PrevPageButton from "./prev-page-button";
-import { ChevronRight } from "lucide-react";
-import FileBrowser from '@/app/(home)/(dashboard)/home/[strategy]/file-browser';
+import FileBrowser from "@/app/(home)/(dashboard)/home/[strategy]/file-browser";
 
 type PageParams = {
   strategy: string;
