@@ -1,9 +1,8 @@
-"use client"
-import React from 'react';
-import './button.css';
+"use client";
+import React from "react";
+import "./button.css";
 
 export interface ButtonProps {
-
   type?: "submit" | "button" | "reset";
   /**
    * Is this the principal call to action on the page.tsx?
@@ -16,7 +15,7 @@ export interface ButtonProps {
   /**
    * How large should the button.tsx be?
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large";
   /**
    * Button contents
    */
@@ -28,31 +27,37 @@ export interface ButtonProps {
 }
 
 export const Button = ({
-  type = 'button',
+  type = "button",
   primary = false,
-  size = 'medium',
-  colorTheme = 'light',
+  size = "medium",
+  colorTheme = "light",
   label,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-  const backgroundColor = colorTheme == "light" ? '#dde7eb' : '#dde7eb';
-  const color = colorTheme == "light" ? '--color-text-secondary' : '--color-text-secondary';
-  const boxshadow = colorTheme == "light" ? 'transparent' : 'inset 0px 0px 0px 3px white';
+  const mode = primary
+    ? "storybook-button--primary"
+    : "storybook-button--secondary";
+  const backgroundColor = colorTheme == "light" ? "#dde7eb" : "#dde7eb";
+  const color =
+    colorTheme == "light" ? "--color-text-secondary" : "--color-text-secondary";
+  const boxshadow =
+    colorTheme == "light" ? "transparent" : "inset 0px 0px 0px 3px white";
   return (
-          <button
-            type={type}
-            className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-            {...props}
-          >
-            {label}
-            <style jsx>{`
-              button {
-                background-color: ${backgroundColor};
-                color:${color};
-                box-shadow: ${boxshadow};
-              }
-            `}</style>
-          </button>
+    <button
+      type={type}
+      className={["storybook-button", `storybook-button--${size}`, mode].join(
+        " ",
+      )}
+      {...props}
+    >
+      {label}
+      <style jsx>{`
+        button {
+          background-color: ${backgroundColor};
+          color: ${color};
+          box-shadow: ${boxshadow};
+        }
+      `}</style>
+    </button>
   );
 };

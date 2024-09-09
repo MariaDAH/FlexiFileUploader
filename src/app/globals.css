@@ -38,7 +38,7 @@ body[data-theme="light"] {
   --color-text-secondary: #076963;
   --color-bg-primary: #fff;
   --color-bg-secondary: #fff;
-  --color-bg-toggle: #1E90FF;
+  --color-bg-toggle: #1e90ff;
 }
 
 body[data-theme="dark"] {
@@ -58,7 +58,6 @@ body {
   margin: 0 auto;
   padding: 0;
 }
-
 
 h1 {
   color: var(--color-text-secondary);
@@ -82,14 +81,12 @@ h1 {
 }
 
 .tooltip.arrow-left::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: -0.5rem;
   margin-top: -0.25rem;
   border-width: 0.25rem;
   border-style: solid;
-  border-color: transparent #D4D4D8 transparent transparent;
+  border-color: transparent #d4d4d8 transparent transparent;
 }
-
-
