@@ -1,12 +1,13 @@
 import { signOut } from "@/services/auth";
 import { Button } from "@/components/ui/button/button";
 import React from "react";
+import PageHeader from '@/components/page-header';
 
 export default async function Logout() {
   return (
     <>
+      <PageHeader title="Log out" description="Confirm that you'd like to sign out of the app" />
       <main className="dark:bg-black dark:text-white w-screen pt-28">
-        <h1 className="text-4xl">You are leaving...</h1>
         <div className="pt-40">
           <div className="flex justify-center items-center">
             <div className="w-1/2 h-1/2 flex justify-center items-center">

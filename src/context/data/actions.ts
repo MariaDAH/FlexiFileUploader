@@ -10,7 +10,10 @@ export async function uploadLocal(formData: FormData): Promise<void> {
 
   const buffer = new Uint8Array(arrayBuffer);
   const path_ = path.join(process.cwd(), "./public/uploads/");
-  const fullPath = `${path_}${file.name}`;
+
+  const safeFileName = path.normalize(file.name).replace(/^(\.\.(\/|\\|$))+/, '');
+
+  const fullPath = path.join(path_, safeFileName);
 
   console.log("Saving file in path", fullPath);
 

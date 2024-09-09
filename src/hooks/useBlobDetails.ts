@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { File } from "@/context/types";
+import type { File } from "@/context/types";
 
 const useBlobDetails = () => {
   const [data, setBlobs] = useState<File[] | null>(null);
@@ -11,13 +11,16 @@ const useBlobDetails = () => {
       try {
         const response = await fetch("/api/public/v1/uploads");
         const data = await response.json();
+
+
+
         const files = data.map((blob: any) => {
           const file: File = {
             name: blob.pathname ?? "",
             size: blob?.size ?? 0,
             type: "",
             extension: blob.pathname.split(".").pop() ?? "",
-            lastModified: blob.uploadedAt,
+            uploadedAt: blob.uploadedAt,
           };
           return file;
         });

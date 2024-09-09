@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs/promises";
-import { File } from "@/context/types";
+import type { File } from "@/context/types";
 
 export const getUniqueValues = (array: any) =>
   array.reduce(
@@ -28,25 +28,35 @@ export const getArrayOfRandomColors = (n: number) => {
   return colors;
 };
 
-export const getMaxSizesByElement = (array: any) => {
-  const groupedByCategory = array.reduce((acc: any, item: any) => {
-    const { extension, size } = item;
+export const getMaxSizesByElement = (array: File[]) => {
+  const groupedByCategory = array.reduce(
+    (acc: Record<string, number>, item: File) => {
+      const { size } = item;
 
-    if (!acc[extension]) {
-      // If category does not exist in accumulator, initialize it
-      acc[extension] = size;
-    } else {
-      // Sum size value to existing one
-      acc[extension] += (acc[extension], size);
-    }
+      const extension = item.extension?.toLowerCase() ?? "n/a";
 
-    return acc;
-  }, {});
+      acc[extension] = (acc[extension] ?? 0) + size;
+
+      return acc;
+    },
+    {},
+  );
 
   console.log(groupedByCategory);
 
   return groupedByCategory;
 };
+
+export function getVolumeByExtension(
+  items: File[],
+): Array<{ extension: string; volume: number }> {
+  const grouped = getMaxSizesByElement(items);
+
+  return Object.entries(grouped).map(([extension, volume]) => ({
+    extension: extension,
+    volume,
+  }));
+}
 
 export async function getStatsForDirectoryFile(
   filePaths: string[],
@@ -61,7 +71,7 @@ export async function getStatsForDirectoryFile(
         size: stats.size,
         type: "",
         extension: path.extname(filePath),
-        lastModified: stats.atime,
+        uploadedAt: stats.ctime,
       };
     }),
   );
@@ -74,6 +84,6 @@ export async function getLocalFileMetadata(filePath: string): Promise<File> {
     size: stats.size,
     type: "",
     extension: path.extname(filePath),
-    lastModified: stats.atime,
+    uploadedAt: stats.ctime,
   };
 }

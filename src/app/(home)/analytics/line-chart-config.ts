@@ -65,7 +65,7 @@ export const GetLineChartConfiguration = (props: DataProps): LineCharConfig => {
   const dataLineChart = {
     data: {
       labels: props.data.map((entry: File) =>
-        new Date(entry.lastModified).toLocaleDateString(),
+        new Date(entry.uploadedAt).toLocaleDateString(),
       ),
       datasets: [
         {
