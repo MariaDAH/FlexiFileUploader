@@ -1,9 +1,5 @@
 import { QueryClient } from "react-query";
-import {
-  FileSchema,
-  StorageContent,
-  StorageContentSchema,
-} from "@/context/types";
+import { StorageContent, StorageContentSchema } from "@/context/types";
 
 export const queryClient = new QueryClient();
 

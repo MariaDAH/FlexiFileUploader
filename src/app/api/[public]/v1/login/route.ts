@@ -2,9 +2,9 @@ import { User } from "@/context/interfaces/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  console.log("Creating user...");
-  const { username, password } = await req.json();
+  const { username, password, csrfToken } = await req.json();
 
+  /* Mock */
   const user: User = {
     name: username,
     email: "maria@email.com",

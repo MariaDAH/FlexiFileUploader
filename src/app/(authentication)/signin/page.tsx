@@ -35,7 +35,12 @@ export default async function Signin() {
                 </div>
                 <div className="pt-5 text-base font-semibold leading-7 flex justify-center">
                   <Link href="/api/auth/signin">
-                    <Button label="Sign in" size="large" primary />
+                    <Button
+                      label="Sign in"
+                      size="large"
+                      data-id="open-signin-btn"
+                      primary
+                    />
                   </Link>
                 </div>
                 <div className="pt-5 text-base font-semibold text-gray-600 leading-7 flex justify-right">

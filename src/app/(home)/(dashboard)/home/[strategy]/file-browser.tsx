@@ -8,7 +8,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { File, ListFilesResult } from "@/context/types";
 import { useState } from "react";
-import FileInspector from '@/app/(home)/(dashboard)/home/[strategy]/file-inspector';
+import FileInspector from "@/app/(home)/(dashboard)/home/[strategy]/file-inspector";
 
 interface FileBrowserProps {
   data: ListFilesResult;
@@ -24,7 +24,11 @@ export default function FileBrowser({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div className=" col-span-1 lg:col-span-2">
-        <DataTable columns={columns} data={result.files} onSelect={(item) => setCurrentFile(item)} />
+        <DataTable
+          columns={columns}
+          data={result.files}
+          onSelect={(item) => setCurrentFile(item)}
+        />
         <div className="mt-6 flex justify-between">
           <PrevPageButton disabled={!canGoBack} />
           <Button

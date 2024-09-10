@@ -34,7 +34,11 @@ export default function Home() {
             {/* TODO: display total amount of files */}
             <CardContent>Files: 123</CardContent>
             <CardFooter>
-              <Button variant="default" asChild>
+              <Button
+                variant="default"
+                data-id="open-upload-strategy-btn"
+                asChild
+              >
                 <Link href={`/home/${strategy}`}>
                   View <ArrowRight className="ml-2 size-4" />
                 </Link>
