@@ -15,7 +15,7 @@ new providers with very little effort.
 
 #### Upload use case:
 Important: When using the uploader I just have  implemented the vercel upload strategy, meaning any file uploaded in this page will be uploaded straight
-away to a unique vercel store. This could be more versatil, you can use more than one storage for project but again.
+away to a unique vercel store. This could be more versatil, you can use more than one storage for project.
 
 Constraint: Using the vercel server upload there is a limit on the file size in case of a Vercel-hosted website is 4.5 MB. 
 This means you can't upload files larger than 4.5 MB on Vercel when using this method.
